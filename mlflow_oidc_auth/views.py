@@ -374,7 +374,7 @@ def delete_can_manage_registered_model_permission(resp: Response):
     """
     # Get model name from request context because it's not available in the response
     model_name = _get_request_param("name")
-    username = _get_request_param("user_name")
+    username = _get_request_param("username")
     store.delete_registered_model_permission(model_name, username)
 
 
@@ -632,7 +632,7 @@ def make_basic_auth_response() -> Response:
 def create_experiment_permission():
     store.create_experiment_permission(
         _get_experiment_id(),
-        _get_request_param("user_name"),
+        _get_request_param("username"),
         _get_request_param("permission"),
     )
     return jsonify({"message": "Experiment permission has been created."})
@@ -642,7 +642,7 @@ def create_experiment_permission():
 @catch_mlflow_exception
 def get_experiment_permission():
     experiment_id = _get_request_param("experiment_id")
-    username = _get_request_param("user_name")
+    username = _get_request_param("username")
     ep = store.get_experiment_permission(experiment_id, username)
     return make_response({"experiment_permission": ep.to_json()})
 
@@ -815,13 +815,13 @@ def update_user_admin():
 
 @catch_mlflow_exception
 def delete_user():
-    store.delete_user(_get_request_param("user_name"))
+    store.delete_user(_get_request_param("username"))
     return jsonify({"message": f"User {_get_username()} has been deleted"})
 
 
 @catch_mlflow_exception
 def get_user():
-    username = _get_request_param("user_name")
+    username = _get_request_param("username")
     user = store.get_user(username)
     return jsonify({"user": user.to_json()})
 
@@ -936,7 +936,7 @@ def _password_generation():
 def update_experiment_permission():
     store.update_experiment_permission(
         _get_experiment_id(),
-        _get_request_param("user_name"),
+        _get_request_param("username"),
         _get_request_param("permission"),
     )
     return jsonify({"message": "Experiment permission has been changed."})
@@ -946,7 +946,7 @@ def update_experiment_permission():
 def delete_experiment_permission():
     store.delete_experiment_permission(
         _get_experiment_id(),
-        _get_request_param("user_name"),
+        _get_request_param("username"),
     )
     return jsonify({"message": "Experiment permission has been deleted."})
 
@@ -954,7 +954,7 @@ def delete_experiment_permission():
 @catch_mlflow_exception
 def create_registered_model_permission():
     name = _get_request_param("name")
-    username = _get_request_param("user_name")
+    username = _get_request_param("username")
     permission = _get_request_param("permission")
     rmp = store.create_registered_model_permission(name, username, permission)
     return make_response({"registered_model_permission": rmp.to_json()})
@@ -963,7 +963,7 @@ def create_registered_model_permission():
 @catch_mlflow_exception
 def get_registered_model_permission():
     name = _get_request_param("name")
-    username = _get_request_param("user_name")
+    username = _get_request_param("username")
     rmp = store.get_registered_model_permission(name, username)
     return make_response({"registered_model_permission": rmp.to_json()})
 
@@ -971,7 +971,7 @@ def get_registered_model_permission():
 @catch_mlflow_exception
 def update_registered_model_permission():
     name = _get_request_param("name")
-    username = _get_request_param("user_name")
+    username = _get_request_param("username")
     permission = _get_request_param("permission")
     store.update_registered_model_permission(name, username, permission)
     return make_response(jsonify({"message": "Model permission has been changed"}))
@@ -980,7 +980,7 @@ def update_registered_model_permission():
 @catch_mlflow_exception
 def delete_registered_model_permission():
     name = _get_request_param("name")
-    username = _get_request_param("user_name")
+    username = _get_request_param("username")
     store.delete_registered_model_permission(name, username)
     return make_response(jsonify({"message": "Model permission has been deleted"}))
 
